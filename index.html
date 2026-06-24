@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Income Fix — Future-Ready Financial Services</title>
+<meta name="description" content="Income Fix delivers intelligent financial advisory, tax planning, investment strategy and wealth management for the modern era." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<!-- Calendly scheduling widget -->
+<link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css" />
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a href="#services" class="skip-link">Skip to content</a>
+  <!-- Animated background canvas -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="grid-overlay"></div>
+  <div class="aurora aurora-1"></div>
+  <div class="aurora aurora-2"></div>
+  <div class="aurora aurora-3"></div>
+
+  <!-- Custom cursor glow -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <a class="brand" href="#home" aria-label="Income Fix home">
+      <span class="brand-mark">
+        <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#5eead4"/>
+              <stop offset="0.5" stop-color="#38bdf8"/>
+              <stop offset="1" stop-color="#818cf8"/>
+            </linearGradient>
+          </defs>
+          <path class="logo-line" d="M5 28 L14 19 L21 24 L35 9" fill="none" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle class="logo-dot" cx="35" cy="9" r="3.5" fill="#5eead4"/>
+        </svg>
+      </span>
+      <span class="brand-text">Income<span class="brand-accent">Fix</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#stats">Results</a>
+      <a href="#testimonials">Stories</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="btn btn-nav">Book a Call</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="pill reveal" data-reveal>
+          <span class="pulse-dot"></span> Smarter money, engineered for you
+        </div>
+        <h1 class="reveal" data-reveal>
+          We <span class="grad-text">fix</span> your income.<br/>
+          You build your <span class="grad-text">future</span>.
+        </h1>
+        <p class="hero-sub reveal" data-reveal>
+          Income Fix is a next-generation financial advisory practice. We blend
+          data-driven strategy with human expertise to grow, protect and optimize
+          your wealth — taxes, investments, retirement and beyond.
+        </p>
+        <div class="hero-cta reveal" data-reveal>
+          <a href="#contact" class="btn btn-primary">Start Your Plan <span class="arrow">→</span></a>
+          <a href="#services" class="btn btn-ghost">Explore Services</a>
+        </div>
+        <div class="hero-trust reveal" data-reveal>
+          <span>Trusted by founders, freelancers & families</span>
+          <div class="stars" aria-label="5 star rated">★★★★★</div>
+        </div>
+      </div>
+
+      <!-- Animated SVG dashboard graphic -->
+      <div class="hero-visual reveal" data-reveal>
+        <div class="orbit-ring"></div>
+        <div class="glass-card">
+          <div class="card-head">
+            <span class="card-title">Portfolio Growth</span>
+            <span class="card-badge">+38.4%</span>
+          </div>
+          <svg class="chart" viewBox="0 0 320 160" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="rgba(56,189,248,0.45)"/>
+                <stop offset="1" stop-color="rgba(56,189,248,0)"/>
+              </linearGradient>
+              <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#5eead4"/>
+                <stop offset="1" stop-color="#818cf8"/>
+              </linearGradient>
+            </defs>
+            <path class="chart-area" d="M0,130 L30,120 L60,128 L90,95 L120,105 L150,70 L180,80 L210,48 L240,58 L270,30 L300,38 L320,18 L320,160 L0,160 Z" fill="url(#areaGrad)"/>
+            <path class="chart-line" d="M0,130 L30,120 L60,128 L90,95 L120,105 L150,70 L180,80 L210,48 L240,58 L270,30 L300,38 L320,18" fill="none" stroke="url(#lineGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="card-foot">
+            <div class="mini-stat"><span class="mini-num" data-count="2.4" data-suffix="M" data-prefix="$">$0</span><span class="mini-label">Assets managed</span></div>
+            <div class="mini-stat"><span class="mini-num" data-count="14" data-suffix="%">0</span><span class="mini-label">Avg. return</span></div>
+          </div>
+        </div>
+        <div class="float-chip chip-1">💸 Tax saved</div>
+        <div class="float-chip chip-2">📈 Auto-invest</div>
+        <div class="float-chip chip-3">🛡️ Protected</div>
+      </div>
+    </div>
+    <div class="scroll-hint"><span></span>Scroll</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Tax Strategy</span><span>•</span><span>Wealth Management</span><span>•</span><span>Retirement Planning</span><span>•</span><span>Investment Advisory</span><span>•</span><span>Cash Flow</span><span>•</span><span>Risk & Insurance</span><span>•</span>
+      <span>Tax Strategy</span><span>•</span><span>Wealth Management</span><span>•</span><span>Retirement Planning</span><span>•</span><span>Investment Advisory</span><span>•</span><span>Cash Flow</span><span>•</span><span>Risk & Insurance</span><span>•</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="section-head reveal" data-reveal>
+      <span class="eyebrow">What we do</span>
+      <h2>Financial services, <span class="grad-text">reimagined</span></h2>
+      <p>Everything you need to take control of your money — under one intelligent roof.</p>
+    </div>
+    <div class="cards">
+      <article class="service-card reveal" data-reveal data-tilt>
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48" width="44" height="44"><path d="M8 36 L18 24 L26 30 L40 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="40" cy="12" r="3.5" fill="currentColor"/></svg>
+        </div>
+        <h3>Investment Advisory</h3>
+        <p>Personalized, risk-aware portfolios built to compound. Globally diversified, continuously rebalanced.</p>
+        <span class="svc-arrow">→</span>
+      </article>
+
+      <article class="service-card reveal" data-reveal data-tilt>
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48" width="44" height="44"><rect x="10" y="8" width="28" height="32" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M17 18 H31 M17 24 H31 M17 30 H26" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Tax Planning</h3>
+        <p>Keep more of what you earn. Proactive, year-round strategies that legally minimize your tax burden.</p>
+        <span class="svc-arrow">→</span>
+      </article>
+
+      <article class="service-card reveal" data-reveal data-tilt>
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48" width="44" height="44"><path d="M24 6 L40 14 V24 C40 34 33 40 24 43 C15 40 8 34 8 24 V14 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M18 24 l5 5 l8 -10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Wealth Protection</h3>
+        <p>Insurance, estate and risk planning so your family and assets stay secure no matter what comes.</p>
+        <span class="svc-arrow">→</span>
+      </article>
+
+      <article class="service-card reveal" data-reveal data-tilt>
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48" width="44" height="44"><circle cx="24" cy="24" r="16" fill="none" stroke="currentColor" stroke-width="3"/><path d="M24 14 V24 L31 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Retirement Planning</h3>
+        <p>A clear roadmap to financial independence with projections you can actually trust and adjust.</p>
+        <span class="svc-arrow">→</span>
+      </article>
+
+      <article class="service-card reveal" data-reveal data-tilt>
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48" width="44" height="44"><path d="M8 32 C16 16 32 16 40 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="22" r="4" fill="currentColor"/><path d="M24 32 V40 M16 40 H32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Cash Flow & Budgeting</h3>
+        <p>Real-time visibility into your money with smart automation that pays you first, every time.</p>
+        <span class="svc-arrow">→</span>
+      </article>
+
+      <article class="service-card reveal" data-reveal data-tilt>
+        <div class="svc-icon">
+          <svg viewBox="0 0 48 48" width="44" height="44"><rect x="8" y="10" width="32" height="28" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M8 20 H40 M16 30 H24" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Business Finance</h3>
+        <p>From entity structuring to forecasting — financial clarity that scales with your company.</p>
+        <span class="svc-arrow">→</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section" id="process">
+    <div class="section-head reveal" data-reveal>
+      <span class="eyebrow">How it works</span>
+      <h2>Your path to <span class="grad-text">financial clarity</span></h2>
+      <p>A simple, transparent process designed around you.</p>
+    </div>
+    <div class="timeline">
+      <div class="t-line"><div class="t-line-fill" id="tLineFill"></div></div>
+      <div class="step reveal" data-reveal>
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Discovery Call</h3>
+          <p>We listen first. Understanding your goals, income, and what financial freedom means to you.</p>
+        </div>
+      </div>
+      <div class="step reveal" data-reveal>
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>Custom Strategy</h3>
+          <p>A tailored, data-backed plan covering investments, taxes, protection and growth.</p>
+        </div>
+      </div>
+      <div class="step reveal" data-reveal>
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Implementation</h3>
+          <p>We handle the heavy lifting — accounts, automation and optimization, done for you.</p>
+        </div>
+      </div>
+      <div class="step reveal" data-reveal>
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>Ongoing Optimization</h3>
+          <p>Markets move, life changes. We continuously refine so your plan always stays ahead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section stats" id="stats">
+    <div class="stat reveal" data-reveal>
+      <span class="stat-num" data-count="850" data-suffix="+">0</span>
+      <span class="stat-label">Clients served</span>
+    </div>
+    <div class="stat reveal" data-reveal>
+      <span class="stat-num" data-count="2.4" data-prefix="$" data-suffix="B">0</span>
+      <span class="stat-label">Wealth advised</span>
+    </div>
+    <div class="stat reveal" data-reveal>
+      <span class="stat-num" data-count="98" data-suffix="%">0</span>
+      <span class="stat-label">Client retention</span>
+    </div>
+    <div class="stat reveal" data-reveal>
+      <span class="stat-num" data-count="15" data-suffix="yrs">0</span>
+      <span class="stat-label">Of experience</span>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" id="testimonials">
+    <div class="section-head reveal" data-reveal>
+      <span class="eyebrow">Client stories</span>
+      <h2>People who <span class="grad-text">fixed their income</span></h2>
+      <p>Real outcomes from founders, professionals and families we work with.</p>
+    </div>
+    <div class="tcards">
+      <article class="tcard reveal" data-reveal>
+        <div class="quote-mark">"</div>
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>Income Fix restructured my taxes and investments in a single quarter. I'm keeping thousands more a year — and I finally understand where every dollar goes.</p>
+        <div class="tperson">
+          <span class="tavatar">SR</span>
+          <span><span class="tname">Sara Rahman</span><br/><span class="trole">Startup Founder</span></span>
+        </div>
+      </article>
+      <article class="tcard reveal" data-reveal>
+        <div class="quote-mark">"</div>
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>The clarity is unreal. I went from anxious about retirement to having a concrete plan I actually trust. No jargon, no upsells — just honest guidance.</p>
+        <div class="tperson">
+          <span class="tavatar">DM</span>
+          <span><span class="tname">David Mensah</span><br/><span class="trole">Senior Engineer</span></span>
+        </div>
+      </article>
+      <article class="tcard reveal" data-reveal>
+        <div class="quote-mark">"</div>
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p>As a freelancer my income is lumpy. They built automation that pays me first and smooths the rest. Game-changer for my peace of mind.</p>
+        <div class="tperson">
+          <span class="tavatar">LC</span>
+          <span><span class="tname">Lena Costa</span><br/><span class="trole">Freelance Designer</span></span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT / WHY -->
+  <section class="section about" id="about">
+    <div class="about-visual reveal" data-reveal>
+      <div class="glass-card about-card">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 200 200" width="220" height="220">
+            <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="14"/>
+            <circle class="ring-progress" cx="100" cy="100" r="80" fill="none" stroke="url(#lineGrad)" stroke-width="14" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+          </svg>
+          <div class="ring-center"><span class="ring-num" data-count="100" data-suffix="%">0</span><span>Fiduciary</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="about-copy reveal" data-reveal>
+      <span class="eyebrow">Why Income Fix</span>
+      <h2>Advice that's <span class="grad-text">always on your side</span></h2>
+      <p>We're a fiduciary practice — legally and ethically bound to act in your best interest. No hidden commissions, no jargon, no products you don't need. Just clear, honest guidance powered by modern tools.</p>
+      <ul class="check-list">
+        <li>Transparent, flat-fee pricing — no surprises</li>
+        <li>Bank-grade security & encrypted client portal</li>
+        <li>Real human advisors, available when you need them</li>
+        <li>Data-driven decisions, reviewed every quarter</li>
+      </ul>
+      <a href="#contact" class="btn btn-primary">Meet Your Advisor <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACT -->
+  <section class="section contact" id="contact">
+    <div class="contact-card reveal" data-reveal>
+      <div class="contact-glow"></div>
+      <span class="eyebrow">Let's talk</span>
+      <h2>Ready to <span class="grad-text">fix your income</span>?</h2>
+      <p>Pick a time below for your free 30-minute strategy session. You'll instantly get a confirmation with a video-call link by email — no pressure, no obligation.</p>
+      <!-- Inline Calendly scheduler (initialized in script.js with CALENDLY_URL) -->
+      <div class="calendly-inline-widget" id="calendlyInline" aria-label="Schedule a free consultation"></div>
+      <p class="contact-fallback" id="calendlyFallback" hidden>
+        Scheduler couldn't load. Email us directly at
+        <a href="mailto:memon.aadi@gmail.com?subject=Free%20strategy%20call">memon.aadi@gmail.com</a>.
+      </p>
+      <p class="contact-alt">Prefer email? <a href="mailto:memon.aadi@gmail.com">memon.aadi@gmail.com</a></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="brand-text">Income<span class="brand-accent">Fix</span></span>
+        <p>Future-ready financial services for people who refuse to settle.</p>
+      </div>
+      <div class="footer-cols">
+        <div><h4>Services</h4><a href="#services">Investments</a><a href="#services">Tax</a><a href="#services">Retirement</a></div>
+        <div><h4>Company</h4><a href="#about">About</a><a href="#process">Process</a><a href="#contact">Contact</a></div>
+        <div><h4>Connect</h4><a href="#">LinkedIn</a><a href="#">Twitter / X</a><a href="mailto:hello@incomefix.com">Email</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Income Fix. All rights reserved.</span>
+      <span class="footer-disc">Advisory services for illustration only. Not financial advice.</span>
+    </div>
+  </footer>
+
+  <!-- STICKY BOOK-A-CALL BUTTON -->
+  <button class="sticky-book" id="stickyBook" aria-label="Book a free call">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 9 H21 M8 3 V6 M16 3 V6 M8 14 l3 3 l5 -6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Book a call</span>
+  </button>
+
+  <!-- SERVICE DETAIL MODAL -->
+  <div class="modal-overlay" id="serviceModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+      <div class="modal-glow"></div>
+      <div class="modal-head">
+        <div class="modal-icon" id="modalIcon"></div>
+        <div>
+          <span class="modal-eyebrow" id="modalEyebrow">Service</span>
+          <h3 id="modalTitle">Service</h3>
+        </div>
+      </div>
+      <p class="modal-lede" id="modalLede"></p>
+      <div class="modal-grid">
+        <div>
+          <h4>What's included</h4>
+          <ul class="modal-list" id="modalIncludes"></ul>
+        </div>
+        <div>
+          <h4>Who it's for</h4>
+          <p class="modal-for" id="modalFor"></p>
+          <div class="modal-pricing" id="modalPricing"></div>
+        </div>
+      </div>
+      <div class="modal-cta">
+        <button class="btn btn-primary" id="modalConsult">Connect with a consultant <span class="arrow">→</span></button>
+        <span class="modal-cta-note">Free 30-min call · no obligation</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
