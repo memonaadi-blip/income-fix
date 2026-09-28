@@ -110,52 +110,52 @@ document.querySelectorAll('.service-card').forEach(card => {
 /* ===== Service detail modal ===== */
 const SERVICES = {
   'Investment Advisory': {
-    eyebrow: 'Grow your money',
+    eyebrow: 'Grow your capital',
     formValue: 'Investment Advisory',
-    lede: 'A globally diversified, risk-aware portfolio engineered to compound your wealth — built around your goals, timeline and tolerance, then continuously rebalanced as markets move.',
-    includes: ['Personalized risk & goal assessment', 'Low-cost diversified portfolio design', 'Automatic rebalancing & tax-loss harvesting', 'Quarterly performance reviews', 'Direct access to your advisor'],
-    for: 'Anyone with savings to invest who wants professional, conflict-free guidance instead of guessing — from first-time investors to those managing a sizeable portfolio.',
-    pricing: 'From <b>0.6%</b> of assets / year'
+    lede: 'A disciplined, risk-aware investment strategy engineered to grow and protect your capital — built around your goals and horizon, then reviewed as markets move.',
+    includes: ['Risk profile & goal mapping', 'Diversified portfolio construction', 'Ongoing monitoring & rebalancing', 'Periodic performance reviews', 'Direct access to your advisor'],
+    for: 'Individuals and businesses with capital to deploy who want professional, conflict-free guidance instead of guesswork.',
+    pricing: '<b>Advisory</b> retainer'
   },
   'Tax Planning': {
     eyebrow: 'Keep more of it',
     formValue: 'Tax Planning',
-    lede: 'Proactive, year-round tax strategy — not a once-a-year scramble. We legally minimize what you owe so more of every dollar you earn stays with you.',
-    includes: ['Year-round tax-saving strategy', 'Deduction & credit optimization', 'Entity & income structuring', 'Estimated-payment planning', 'Coordination with your CPA at filing'],
-    for: 'High earners, business owners, freelancers and anyone with a complex or growing income who feels they pay more tax than they should.',
-    pricing: 'From <b>$1,200</b> / year'
+    lede: 'Proactive, year-round tax strategy — not a once-a-year scramble. We structure your affairs to legally minimise liability and keep you fully compliant.',
+    includes: ['Year-round tax strategy', 'Deduction & exemption optimisation', 'Income & entity structuring', 'Return preparation & filing', 'Notice & assessment support'],
+    for: 'Businesses, professionals and high earners with complex or growing income who want to pay only what they truly owe.',
+    pricing: '<b>Annual</b> engagement'
   },
-  'Wealth Protection': {
-    eyebrow: 'Stay secure',
-    formValue: 'Wealth Protection',
-    lede: 'Insurance, estate and risk planning that shields your family and assets from the unexpected — so a single event can never undo years of progress.',
-    includes: ['Life, disability & liability review', 'Estate & beneficiary planning', 'Asset-protection structuring', 'Emergency-fund strategy', 'Annual coverage health-check'],
-    for: 'Families, homeowners and business owners who want certainty that their loved ones and assets are protected no matter what happens.',
-    pricing: 'Flat <b>$900</b> review'
+  'REIT Registrations': {
+    eyebrow: 'Launch your REIT',
+    formValue: 'REIT Registrations',
+    lede: 'End-to-end support to structure, register and launch a Real Estate Investment Trust — from feasibility and documentation to regulatory approval.',
+    includes: ['REIT structuring & feasibility', 'Scheme & trust documentation', 'Regulatory (SECP) filing & liaison', 'RMC / trustee coordination', 'Compliance & reporting setup'],
+    for: 'Real-estate developers, sponsors and investors looking to launch or convert assets into a regulated REIT vehicle.',
+    pricing: '<b>Project-based</b>'
   },
-  'Retirement Planning': {
-    eyebrow: 'Plan your freedom',
-    formValue: 'Retirement Planning',
-    lede: 'A clear, numbers-backed roadmap to financial independence — with projections you can actually trust, stress-test and adjust as life changes.',
-    includes: ['Retirement-income projections', 'Account strategy (401k, IRA, Roth)', 'Withdrawal & drawdown planning', 'Social Security optimization', 'Scenario & "what-if" modeling'],
-    for: 'Anyone 5–30 years from retirement who wants to know — with confidence — exactly when and how they can stop working.',
-    pricing: 'From <b>$1,500</b> plan'
-  },
-  'Cash Flow & Budgeting': {
-    eyebrow: 'Master your money',
-    formValue: 'Cash Flow & Budgeting',
-    lede: 'Real-time visibility into where your money goes, plus smart automation that pays you first — turning irregular income into a calm, predictable system.',
-    includes: ['Unified cash-flow dashboard', 'Automated "pay yourself first" rules', 'Spending & savings targets', 'Irregular-income smoothing', 'Monthly check-ins'],
-    for: 'Freelancers, dual-income households and anyone whose money feels chaotic and wants a simple system that runs itself.',
-    pricing: 'From <b>$120</b> / month'
+  'ERP Implementation': {
+    eyebrow: 'Systemise your finance',
+    formValue: 'ERP Implementation',
+    lede: 'We plan, configure and roll out financial ERP systems that unify your accounting, reporting and operations — with your team trained and confident.',
+    includes: ['Requirements & process mapping', 'System selection & configuration', 'Data migration & integration', 'Chart of accounts & controls', 'Training & go-live support'],
+    for: 'Growing companies replacing spreadsheets or legacy tools who want one reliable financial system of record.',
+    pricing: '<b>Scoped</b> to your business'
   },
   'Business Finance': {
     eyebrow: 'Scale with clarity',
     formValue: 'Business Finance',
-    lede: 'From entity structuring to forecasting, we give your company the financial clarity it needs to make confident decisions and scale sustainably.',
-    includes: ['Entity & compensation structuring', 'Cash-flow & runway forecasting', 'Profit & pricing analysis', 'Owner pay & tax coordination', 'Quarterly strategy sessions'],
-    for: 'Founders, agencies and small-business owners who want a financial co-pilot rather than just a bookkeeper.',
-    pricing: 'Custom — from <b>$500</b> / month'
+    lede: 'Outsourced finance leadership — from forecasting and budgeting to funding readiness — giving your business the clarity to make confident decisions and scale.',
+    includes: ['Budgeting & cash-flow forecasting', 'Management reporting & KPIs', 'Financial modelling & analysis', 'Funding & investor readiness', 'Quarterly strategy sessions'],
+    for: 'Founders and SMEs who need a financial co-pilot and board-ready numbers without a full-time CFO.',
+    pricing: '<b>Monthly</b> retainer'
+  },
+  'Bookkeeping & Financial Services': {
+    eyebrow: 'Books, handled',
+    formValue: 'Bookkeeping & Financial Services',
+    lede: 'Accurate, up-to-date books and the day-to-day financial services that keep your business compliant, audit-ready and running smoothly.',
+    includes: ['Day-to-day bookkeeping & reconciliation', 'Accounts payable & receivable', 'Payroll & statutory compliance', 'Monthly financial statements', 'Year-end & audit support'],
+    for: 'Businesses that want clean, reliable books and dependable financial operations handled for them.',
+    pricing: '<b>Flexible</b> monthly plans'
   }
 };
 
@@ -237,7 +237,7 @@ const CALENDLY_URL = 'https://calendly.com/memon-aadi/30min'; // your live Calen
 // Theme the Calendly UI to match the site (dark bg, brand accent)
 function themedCalendlyUrl(){
   const sep = CALENDLY_URL.includes('?') ? '&' : '?';
-  return CALENDLY_URL + sep + 'background_color=0d1322&text_color=eef2fa&primary_color=38bdf8&hide_gdpr_banner=1';
+  return CALENDLY_URL + sep + 'background_color=182132&text_color=e8e2d8&primary_color=c7aa8a&hide_gdpr_banner=1';
 }
 
 // Popup scheduler (used by service-modal "Connect with a consultant")
@@ -304,72 +304,122 @@ function openCalendly(prefill){
   });
 })();
 
-/* ===== Particle network background ===== */
-(function particles(){
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+/* ===== Animated financial-chart background =====
+   A calm, self-drawing line chart (value axis + month gridlines + plotting
+   markers) inspired by a trading/forecast chart — light and unobtrusive so it
+   sits behind the content. */
+(function chartBackground(){
   const canvas = document.getElementById('bg-canvas');
+  if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let w, h, pts, mouse = { x: -999, y: -999 };
-  const COUNT = () => Math.min(90, Math.floor(window.innerWidth / 16));
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let w, h, dpr;
+  const months  = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const yVals   = [10000, 8000, 6000, 4000, 2000, 0, -2000, -4000, -6000, -8000];
+  const vMin = -8000, vMax = 10000;
+  const padL = 66, padR = 26, padT = 54, padB = 60;
+  let series = [];
+
+  // Build a smooth-ish random-walk series with a gentle upward drift
+  function makeSeries(color, glow, volatility, base){
+    const n = 26, pts = [];
+    let v = base + (Math.random() - 0.5) * 1400;
+    for (let i = 0; i < n; i++){
+      v += (Math.random() - 0.5) * volatility + 70; // drift up
+      v = Math.max(vMin + 600, Math.min(vMax - 600, v));
+      pts.push({ v, phase: Math.random() * Math.PI * 2 });
+    }
+    return { color, glow, pts };
+  }
+  function build(){
+    series = [
+      makeSeries('rgba(199,170,138,0.60)', 'rgba(216,190,158,0.95)', 2600, 1200),  // primary (gold)
+      makeSeries('rgba(120,134,158,0.28)', null,                     1700, -1200)  // secondary (steel)
+    ];
+  }
 
   function resize(){
-    w = canvas.width = window.innerWidth * devicePixelRatio;
-    h = canvas.height = window.innerHeight * devicePixelRatio;
-    canvas.style.width = window.innerWidth + 'px';
-    canvas.style.height = window.innerHeight + 'px';
-    init();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-  function init(){
-    pts = [];
-    const n = COUNT();
-    for (let i = 0; i < n; i++){
-      pts.push({
-        x: Math.random() * w, y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.25 * devicePixelRatio,
-        vy: (Math.random() - 0.5) * 0.25 * devicePixelRatio,
-        r: (Math.random() * 1.6 + 0.6) * devicePixelRatio
-      });
-    }
-  }
-  window.addEventListener('mousemove', e => { mouse.x = e.clientX * devicePixelRatio; mouse.y = e.clientY * devicePixelRatio; });
-  const LINK = 130 * devicePixelRatio;
 
-  function draw(){
-    ctx.clearRect(0, 0, w, h);
-    for (let i = 0; i < pts.length; i++){
-      const p = pts[i];
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(94,234,212,0.55)';
-      ctx.fill();
-      for (let j = i + 1; j < pts.length; j++){
-        const q = pts[j];
-        const dx = p.x - q.x, dy = p.y - q.y;
-        const d = Math.hypot(dx, dy);
-        if (d < LINK){
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-          ctx.strokeStyle = `rgba(56,189,248,${0.16 * (1 - d / LINK)})`;
-          ctx.lineWidth = devicePixelRatio;
-          ctx.stroke();
-        }
-      }
-      // link to mouse
-      const mdx = p.x - mouse.x, mdy = p.y - mouse.y;
-      const md = Math.hypot(mdx, mdy);
-      if (md < LINK * 1.4){
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = `rgba(129,140,248,${0.25 * (1 - md / (LINK * 1.4))})`;
-        ctx.lineWidth = devicePixelRatio;
-        ctx.stroke();
-      }
-    }
-    requestAnimationFrame(draw);
+  const yOf = v => padT + (1 - (v - vMin) / (vMax - vMin)) * (h - padT - padB);
+  const xOf = (i, n) => padL + (i / (n - 1)) * (w - padL - padR);
+
+  function drawGrid(){
+    ctx.font = '12px Inter, system-ui, sans-serif';
+    ctx.textBaseline = 'middle';
+    yVals.forEach(v => {
+      const y = yOf(v);
+      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y);
+      ctx.strokeStyle = 'rgba(148,163,184,0.08)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = 'rgba(148,163,184,0.30)'; ctx.textAlign = 'right';
+      ctx.fillText(v.toLocaleString(), padL - 12, y);
+    });
+    ctx.setLineDash([4, 6]);
+    months.forEach((m, i) => {
+      const x = padL + (i / (months.length - 1)) * (w - padL - padR);
+      ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, h - padB);
+      ctx.strokeStyle = 'rgba(148,163,184,0.07)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.fillStyle = 'rgba(148,163,184,0.32)'; ctx.textAlign = 'center';
+      ctx.fillText(m, x, h - padB + 24);
+    });
+    ctx.setLineDash([]);
   }
-  window.addEventListener('resize', resize);
-  resize(); draw();
+
+  function drawSeries(s, progress, time){
+    const n = s.pts.length, total = n - 1;
+    const lead = progress * total;            // fractional index reached
+    const drift = i => Math.sin(time * 0.0006 + s.pts[i].phase) * 200; // subtle "live" motion
+    let lx = null, ly = null;
+
+    ctx.beginPath();
+    for (let i = 0; i < n && i <= lead; i++){
+      const x = xOf(i, n), y = yOf(s.pts[i].v + drift(i));
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      lx = x; ly = y;
+    }
+    const i0 = Math.floor(lead), frac = lead - i0;          // partial leading segment
+    if (i0 < n - 1 && frac > 0){
+      const x0 = xOf(i0, n),   y0 = yOf(s.pts[i0].v   + drift(i0));
+      const x1 = xOf(i0 + 1, n), y1 = yOf(s.pts[i0 + 1].v + drift(i0 + 1));
+      lx = x0 + (x1 - x0) * frac; ly = y0 + (y1 - y0) * frac;
+      ctx.lineTo(lx, ly);
+    }
+    ctx.strokeStyle = s.color; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.stroke();
+
+    for (let i = 0; i <= i0 && i < n; i++){               // markers at reached points
+      const x = xOf(i, n), y = yOf(s.pts[i].v + drift(i));
+      ctx.beginPath(); ctx.arc(x, y, 2.4, 0, Math.PI * 2);
+      ctx.fillStyle = s.color; ctx.fill();
+    }
+    if (s.glow && lx != null){                            // pulsing leading dot
+      const r = 3 + Math.sin(time * 0.005) * 1.1;
+      ctx.beginPath(); ctx.arc(lx, ly, r + 4, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(216,190,158,0.18)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(lx, ly, r, 0, Math.PI * 2);
+      ctx.fillStyle = s.glow; ctx.fill();
+    }
+  }
+
+  let start = null;
+  function frame(ts){
+    if (start == null) start = ts;
+    const elapsed = ts - start;
+    let p = reduced ? 1 : Math.min(elapsed / 2600, 1);
+    p = 1 - Math.pow(1 - p, 3);                            // ease-out draw
+    ctx.clearRect(0, 0, w, h);
+    drawGrid();
+    series.forEach(s => drawSeries(s, p, reduced ? 0 : elapsed));
+    if (!reduced) requestAnimationFrame(frame);
+  }
+
+  function startAll(){ resize(); build(); start = null; requestAnimationFrame(frame); }
+  window.addEventListener('resize', () => { resize(); if (reduced) requestAnimationFrame(frame); });
+  startAll();
 })();
