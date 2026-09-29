@@ -21,7 +21,7 @@
   <div class="intro" id="intro">
     <button class="intro-skip" id="introSkip">Skip intro →</button>
     <div class="intro-stage" id="introStage">
-      <div class="laptop">
+      <div class="laptop" id="introLaptop">
         <div class="laptop-screen">
           <div class="screen-inner">
             <img class="screen-logo" src="logo-mark-gold.png" alt="FINANSYS" />
@@ -40,12 +40,15 @@
     </div>
   </div>
 
-  <!-- Animated background canvas -->
-  <canvas id="bg-canvas"></canvas>
-  <div class="grid-overlay"></div>
-  <div class="aurora aurora-1"></div>
-  <div class="aurora aurora-2"></div>
-  <div class="aurora aurora-3"></div>
+  <!-- Background video (play controlled in JS to honour reduced-motion) -->
+  <video class="bg-video" id="bgVideo" muted loop playsinline preload="auto" poster="bg-poster.jpg" aria-hidden="true">
+    <source src="bg-video.mp4" type="video/mp4" />
+  </video>
+  <div class="bg-scrim"></div>
+  <button class="bg-toggle" id="bgToggle" aria-label="Pause background video" aria-pressed="false">
+    <svg class="ico-pause" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/></svg>
+    <svg class="ico-play" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 5 L19 12 L7 19 Z" fill="currentColor"/></svg>
+  </button>
 
   <!-- Custom cursor glow -->
   <div class="cursor-glow" id="cursorGlow"></div>
@@ -404,6 +407,8 @@
     </div>
   </div>
 
+  <!-- Motion (motiondivision/motion) for polished animations -->
+  <script src="https://cdn.jsdelivr.net/npm/motion@10.18.0/dist/motion.umd.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

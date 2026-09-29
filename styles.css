@@ -53,8 +53,21 @@ img,svg{display:block}
 }
 .skip-link:focus{top:16px}
 
-/* ===== Animated background ===== */
+/* ===== Background video ===== */
 #bg-canvas{position:fixed;inset:0;z-index:-3;width:100%;height:100%}
+.bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;background:var(--deep)}
+.bg-scrim{position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(14,20,34,.56) 0%,rgba(14,20,34,.64) 50%,rgba(14,20,34,.80) 100%)}
+/* Background-video pause/play control (WCAG 2.2.2) */
+.bg-toggle{position:fixed;left:20px;bottom:22px;z-index:200;width:40px;height:40px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;color:var(--ivory);
+  background:rgba(14,20,34,.62);border:1px solid var(--panel-brd);backdrop-filter:blur(8px);
+  transition:border-color .2s,background .2s,transform .2s}
+.bg-toggle:hover{border-color:var(--gold);transform:scale(1.06)}
+.bg-toggle .ico-play{display:none}
+.bg-toggle.paused .ico-pause{display:none}
+.bg-toggle.paused .ico-play{display:block}
+@media(max-width:600px){.bg-toggle{left:16px;bottom:16px;width:36px;height:36px}}
 .grid-overlay{display:none}  /* chart background now provides the grid */
 .aurora{position:fixed;border-radius:50%;filter:blur(110px);opacity:.16;z-index:-2;pointer-events:none;will-change:transform}
 .aurora-1{width:520px;height:520px;background:#0ea5e9;top:-120px;left:-100px;animation:float1 16s ease-in-out infinite}
@@ -380,9 +393,11 @@ img,svg{display:block}
 .intro.zoom .laptop{transform:rotateX(2deg) rotateY(-4deg) scale(13);
   filter:drop-shadow(0 0 0 transparent) blur(3px);
   transition:transform 1.5s cubic-bezier(.55,0,.9,.28),filter 1.5s ease-in}
-.intro.zoom .laptop-base,.intro.zoom .laptop-hinge,.intro.zoom .laptop-screen{border-color:transparent;transition:border-color .6s}
-.intro.zoom .laptop-base,.intro.zoom .laptop-hinge{opacity:0;transition:opacity .5s}
-.intro.zoom .screen-inner{opacity:0;transition:opacity .5s .15s}
+.intro.zoom .laptop-base,.intro.zoom .laptop-hinge,.intro.zoom .laptop-screen,
+.intro.exiting .laptop-base,.intro.exiting .laptop-hinge,.intro.exiting .laptop-screen{border-color:transparent;transition:border-color .6s}
+.intro.zoom .laptop-base,.intro.zoom .laptop-hinge,
+.intro.exiting .laptop-base,.intro.exiting .laptop-hinge{opacity:0;transition:opacity .5s}
+.intro.zoom .screen-inner,.intro.exiting .screen-inner{opacity:0;transition:opacity .5s .15s}
 .laptop-screen{position:relative;width:78%;margin:0 auto;aspect-ratio:16/10;border-radius:16px 16px 3px 3px;
   background:#0b1220;border:12px solid #37435a;border-bottom-width:14px;overflow:hidden;
   box-shadow:inset 0 0 46px rgba(0,0,0,.7)}

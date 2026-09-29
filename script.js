@@ -441,10 +441,26 @@ function openCalendly(prefill){
   function enter(){
     if (entered) return; entered = true;
     login.classList.add('press');
-    setTimeout(() => intro.classList.add('tilt'), 140);   // slow tilt to 3/4 angle
-    setTimeout(() => intro.classList.add('zoom'), 980);    // then rush into the screen
-    setTimeout(() => intro.classList.add('gone'), 2150);   // fade through as it fills, revealing the site
-    setTimeout(finish, 3050);
+    const lap = document.getElementById('introLaptop');
+
+    if (window.Motion && lap){
+      // Motion-driven: slow tilt to a 3/4 angle, then accelerate the screen
+      // toward the viewer past the edges (enter-the-screen), with motion blur.
+      lap.style.transition = 'none';
+      intro.classList.add('exiting');            // fade base / hinge / login UI
+      Motion.animate(lap,
+        { rotateX: [6, 9, 2], rotateY: [-8, -23, -4], scale: [1, 1.16, 13],
+          filter: ['blur(0px)', 'blur(0px)', 'blur(4px)'] },
+        { duration: 2.2, offset: [0, 0.34, 1], easing: ['ease-out', [0.5, 0, 0.9, 0.28]] });
+      setTimeout(() => intro.classList.add('gone'), 1650);   // reveal site as it fills
+      setTimeout(finish, 2350);
+    } else {
+      // CSS fallback
+      setTimeout(() => intro.classList.add('tilt'), 140);
+      setTimeout(() => intro.classList.add('zoom'), 980);
+      setTimeout(() => intro.classList.add('gone'), 2150);
+      setTimeout(finish, 3050);
+    }
   }
   login.addEventListener('click', enter);
   skip.addEventListener('click', () => { intro.classList.add('gone'); setTimeout(finish, 260); });
@@ -479,6 +495,10 @@ function openCalendly(prefill){
   });
   const dots = [...dotsWrap.children];
 
+  // With Motion available, let it own transform/opacity (springy ease); CSS keeps shadow/border.
+  const M = window.Motion;
+  if (M) cards.forEach(c => { c.style.transition = 'box-shadow .5s, border-color .5s'; });
+
   function layout(){
     cards.forEach((card, i) => {
       let off = i - active;
@@ -486,18 +506,25 @@ function openCalendly(prefill){
       if (off < -n/2) off += n;
       const abs = Math.abs(off);
       const x = off * 152, ry = off * -22, tz = abs === 0 ? 0 : (-165*abs - 30),
-            sc = abs === 0 ? 1 : Math.max(0.72, 0.9 - abs*0.06);
-      card.style.transform = `translateX(${x}px) translateZ(${tz}px) rotateY(${ry}deg) scale(${sc})`;
-      card.style.opacity = abs > 2 ? '0' : '1';
+            sc = abs === 0 ? 1 : Math.max(0.72, 0.9 - abs*0.06), op = abs > 2 ? 0 : 1;
       card.style.zIndex = String(100 - abs);
       card.style.pointerEvents = abs > 2 ? 'none' : 'auto';
+      if (M){
+        M.animate(card, { x: [null, x], z: [null, tz], rotateY: [null, ry], scale: [null, sc], opacity: [null, op] },
+          { duration: 0.6, easing: [0.34, 1.12, 0.64, 1] });
+      } else {
+        card.style.transform = `translateX(${x}px) translateZ(${tz}px) rotateY(${ry}deg) scale(${sc})`;
+        card.style.opacity = String(op);
+      }
       card.classList.toggle('active', off === 0);
       card.setAttribute('tabindex', off === 0 ? '0' : '-1');
     });
     dots.forEach((d, i) => d.classList.toggle('on', i === active));
   }
   function go(i){ active = ((i % n) + n) % n; layout(); }
-  function restart(){ clearInterval(timer); timer = setInterval(() => go(active + 1), 5000); }
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function restart(){ clearInterval(timer); if (reducedMotion) return; timer = setInterval(() => go(active + 1), 5000); }
+  document.addEventListener('visibilitychange', () => { if (document.hidden) clearInterval(timer); else restart(); });
 
   prev.addEventListener('click', () => { go(active - 1); restart(); });
   next.addEventListener('click', () => { go(active + 1); restart(); });
@@ -519,4 +546,35 @@ function openCalendly(prefill){
   wrap.addEventListener('mouseleave', restart);
 
   layout(); restart();
+})();
+
+/* ===== Background video: reduced-motion aware play + pause control (WCAG 2.2.2) ===== */
+(function bgVideoControls(){
+  const v = document.getElementById('bgVideo');
+  const btn = document.getElementById('bgToggle');
+  if (!v || !btn) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let wantPlay = !reduced;                      // reduced-motion → stay on the static poster
+
+  function reflect(){
+    const playing = !v.paused;
+    btn.classList.toggle('paused', !playing);
+    btn.setAttribute('aria-pressed', String(!playing));
+    btn.setAttribute('aria-label', playing ? 'Pause background video' : 'Play background video');
+  }
+  function play(){ const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+
+  if (wantPlay) play(); else v.pause();
+  reflect();
+
+  btn.addEventListener('click', () => {
+    if (v.paused){ wantPlay = true; play(); } else { wantPlay = false; v.pause(); }
+    reflect();
+  });
+  v.addEventListener('play', reflect);
+  v.addEventListener('pause', reflect);
+  // stop off-screen / when tab hidden; resume only if the user wants it playing
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) v.pause(); else if (wantPlay) play();
+  });
 })();
