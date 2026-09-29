@@ -180,7 +180,8 @@ function openModal(card){
   if (!data) return;
   activeService = data.formValue;
   lastFocused = card;
-  modalEls.icon.innerHTML = card.querySelector('.svc-icon').innerHTML;
+  const iconSrc = card.querySelector('.cf-icon') || card.querySelector('.svc-icon');
+  modalEls.icon.innerHTML = iconSrc ? '<svg viewBox="0 0 48 48" width="40" height="40">' + iconSrc.innerHTML + '</svg>' : '';
   modalEls.eyebrow.textContent = data.eyebrow;
   modalEls.title.textContent = title;
   modalEls.lede.textContent = data.lede;
@@ -199,14 +200,17 @@ function closeModal(){
   if (lastFocused) lastFocused.focus();
 }
 
-// Make each service card interactive + accessible
+// Expose for the coverflow module (which decides click = open vs navigate)
+window.__openService = openModal;
+
+// Make each service card accessible; opening is handled by the coverflow module
 document.querySelectorAll('.service-card').forEach(card => {
   card.setAttribute('role', 'button');
-  card.setAttribute('tabindex', '0');
   card.setAttribute('aria-haspopup', 'dialog');
-  card.addEventListener('click', () => openModal(card));
   card.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card); }
+    if ((e.key === 'Enter' || e.key === ' ') && card.classList.contains('active')) {
+      e.preventDefault(); openModal(card);
+    }
   });
 });
 
@@ -304,122 +308,215 @@ function openCalendly(prefill){
   });
 })();
 
-/* ===== Animated financial-chart background =====
-   A calm, self-drawing line chart (value axis + month gridlines + plotting
-   markers) inspired by a trading/forecast chart — light and unobtrusive so it
-   sits behind the content. */
-(function chartBackground(){
+/* ===== Finance-data animated background (original, sample-styled) =====
+   Coin stacks receding into depth, overlaid with animated finance data — a
+   big % counter, donut, pie, bar chart, horizontal data bars and a plotting
+   line — plus a faint tiled FINANSYS watermark. Brand palette, kept behind
+   the content at moderate opacity so text stays readable. */
+(function financeBackground(){
   const canvas = document.getElementById('bg-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let w, h, dpr;
-  const months  = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const yVals   = [10000, 8000, 6000, 4000, 2000, 0, -2000, -4000, -6000, -8000];
-  const vMin = -8000, vMax = 10000;
-  const padL = 66, padR = 26, padT = 54, padB = 60;
-  let series = [];
 
-  // Build a smooth-ish random-walk series with a gentle upward drift
-  function makeSeries(color, glow, volatility, base){
-    const n = 26, pts = [];
-    let v = base + (Math.random() - 0.5) * 1400;
-    for (let i = 0; i < n; i++){
-      v += (Math.random() - 0.5) * volatility + 70; // drift up
-      v = Math.max(vMin + 600, Math.min(vMax - 600, v));
-      pts.push({ v, phase: Math.random() * Math.PI * 2 });
-    }
-    return { color, glow, pts };
-  }
-  function build(){
-    series = [
-      makeSeries('rgba(199,170,138,0.60)', 'rgba(216,190,158,0.95)', 2600, 1200),  // primary (gold)
-      makeSeries('rgba(120,134,158,0.28)', null,                     1700, -1200)  // secondary (steel)
-    ];
+  const GOLD='199,170,138', GOLDL='224,205,178', DEEP='150,120,88', STEEL='120,134,158', IVORY='232,226,216';
+
+  let line = [], back = [], front = [];
+  const bars = Array.from({length:7}, () => ({ base:0.35+Math.random()*0.45, ph:Math.random()*6.28, sp:0.35+Math.random()*0.4 }));
+  function buildLine(){ line=[]; let v=0.5; for(let i=0;i<26;i++){ v+=(Math.random()-0.5)*0.12; v=Math.max(0.2,Math.min(0.82,v)); line.push({v,ph:Math.random()*6.28}); } }
+  function buildStacks(){
+    back=[]; front=[];
+    const bn=Math.max(6,Math.round(w/150)), fn=Math.max(4,Math.round(w/230));
+    for(let i=0;i<bn;i++) back.push({ x:(i+0.5)/bn, coins:7+(Math.random()*5|0), rx:Math.min(30,w*0.026), baseY:0.60+Math.random()*0.08, ph:Math.random()*6.28 });
+    for(let i=0;i<fn;i++) front.push({ x:(i+0.5)/fn+ (Math.random()-0.5)*0.04, coins:11+(Math.random()*6|0), rx:Math.min(52,w*0.05), baseY:1.03+Math.random()*0.04, ph:Math.random()*6.28 });
   }
 
   function resize(){
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    w = window.innerWidth; h = window.innerHeight;
-    canvas.width = w * dpr; canvas.height = h * dpr;
-    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dpr=Math.min(devicePixelRatio||1,2); w=innerWidth; h=innerHeight;
+    canvas.width=w*dpr; canvas.height=h*dpr; canvas.style.width=w+'px'; canvas.style.height=h+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0); buildStacks();
   }
 
-  const yOf = v => padT + (1 - (v - vMin) / (vMax - vMin)) * (h - padT - padB);
-  const xOf = (i, n) => padL + (i / (n - 1)) * (w - padL - padR);
-
-  function drawGrid(){
-    ctx.font = '12px Inter, system-ui, sans-serif';
-    ctx.textBaseline = 'middle';
-    yVals.forEach(v => {
-      const y = yOf(v);
-      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y);
-      ctx.strokeStyle = 'rgba(148,163,184,0.08)'; ctx.lineWidth = 1; ctx.stroke();
-      ctx.fillStyle = 'rgba(148,163,184,0.30)'; ctx.textAlign = 'right';
-      ctx.fillText(v.toLocaleString(), padL - 12, y);
+  function coin(cx,cy,rx,ry,a){
+    ctx.beginPath(); ctx.ellipse(cx,cy,rx,ry,0,0,6.2832); ctx.fillStyle=`rgba(${GOLD},${a})`; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(cx,cy-ry*0.28,rx*0.8,ry*0.5,0,0,6.2832); ctx.fillStyle=`rgba(${GOLDL},${a*0.55})`; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(cx,cy,rx,ry,0,0,6.2832); ctx.strokeStyle=`rgba(${DEEP},${a*0.8})`; ctx.lineWidth=1; ctx.stroke();
+  }
+  function stacks(list,t,fr){
+    list.forEach(s=>{
+      const cx=s.x*w+Math.sin(t*0.22+s.ph)*3, rx=s.rx, ry=rx*0.3, gap=ry*1.5, baseY=s.baseY*h;
+      for(let c=0;c<s.coins;c++){
+        const y=baseY-c*gap-Math.sin(t*0.4+s.ph+c*0.14)*1.0;
+        const a=(fr?0.12:0.055)+(fr?0.10:0.05)*(c/s.coins);
+        coin(cx,y,rx,ry,a);
+      }
     });
-    ctx.setLineDash([4, 6]);
-    months.forEach((m, i) => {
-      const x = padL + (i / (months.length - 1)) * (w - padL - padR);
-      ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, h - padB);
-      ctx.strokeStyle = 'rgba(148,163,184,0.07)'; ctx.lineWidth = 1; ctx.stroke();
-      ctx.fillStyle = 'rgba(148,163,184,0.32)'; ctx.textAlign = 'center';
-      ctx.fillText(m, x, h - padB + 24);
-    });
-    ctx.setLineDash([]);
+  }
+  function watermark(){
+    ctx.save(); ctx.translate(w/2,h/2); ctx.rotate(-0.32);
+    ctx.font=`700 ${Math.round(Math.min(58,w*0.046))}px 'Space Grotesk',sans-serif`;
+    ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillStyle=`rgba(${IVORY},0.035)`;
+    const stepX=Math.max(300,w*0.34), stepY=120; let r=0;
+    for(let yy=-h;yy<h;yy+=stepY,r++) for(let xx=-w;xx<w;xx+=stepX) ctx.fillText('FINANSYS', xx+(r%2?stepX/2:0), yy);
+    ctx.restore();
+  }
+  function grid(){ ctx.lineWidth=1; for(let i=1;i<7;i++){ const y=h*i/7; ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.strokeStyle=`rgba(${STEEL},0.045)`; ctx.stroke(); } }
+
+  function areaLine(t,prog){
+    const x0=w*0.04,x1=w*0.96,y0=h*0.34,y1=h*0.6,n=line.length;
+    const X=i=>x0+(i/(n-1))*(x1-x0), Y=i=>y1-(line[i].v+Math.sin(t*0.4+line[i].ph)*0.02)*(y1-y0);
+    const lead=prog*(n-1); ctx.beginPath(); let lx=null,ly=null,m=Math.min(n-1,Math.floor(lead));
+    for(let i=0;i<=m;i++){ const x=X(i),y=Y(i); i?ctx.lineTo(x,y):ctx.moveTo(x,y); lx=x; ly=y; }
+    if(lx!=null){ ctx.lineTo(lx,y1); ctx.lineTo(X(0),y1); ctx.closePath(); ctx.fillStyle=`rgba(${GOLD},0.05)`; ctx.fill(); }
+    ctx.beginPath(); for(let i=0;i<=m;i++){ const x=X(i),y=Y(i); i?ctx.lineTo(x,y):ctx.moveTo(x,y);}
+    ctx.strokeStyle=`rgba(${GOLD},0.4)`; ctx.lineWidth=2; ctx.lineJoin='round'; ctx.stroke();
+    if(lx!=null){ ctx.beginPath(); ctx.arc(lx,ly,3,0,6.2832); ctx.fillStyle=`rgba(${GOLDL},0.9)`; ctx.fill(); }
+  }
+  function barChart(t){
+    const bx=w*0.09,base=h*0.72,bw=12,gap=10;
+    bars.forEach((b,i)=>{ const hgt=(b.base+Math.sin(t*b.sp+b.ph)*0.16)*h*0.14, x=bx+i*(bw+gap);
+      ctx.fillStyle=`rgba(${GOLD},0.16)`; ctx.fillRect(x,base-hgt,bw,hgt);
+      ctx.fillStyle=`rgba(${GOLDL},0.24)`; ctx.fillRect(x,base-hgt,bw,3); });
+    ctx.strokeStyle=`rgba(${STEEL},0.12)`; ctx.beginPath(); ctx.moveTo(bx-6,base); ctx.lineTo(bx+bars.length*(bw+gap),base); ctx.stroke();
+  }
+  function donut(t){
+    const cx=w*0.86,cy=h*0.26,r=Math.min(60,w*0.052),p=0.5+0.18*Math.sin(t*0.22);
+    ctx.lineWidth=Math.max(7,r*0.16); ctx.strokeStyle=`rgba(${STEEL},0.16)`; ctx.beginPath(); ctx.arc(cx,cy,r,0,6.2832); ctx.stroke();
+    ctx.strokeStyle=`rgba(${GOLD},0.5)`; ctx.lineCap='round'; ctx.beginPath(); ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+p*6.2832); ctx.stroke(); ctx.lineCap='butt';
+    ctx.fillStyle=`rgba(${IVORY},0.5)`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.font=`600 ${Math.round(r*0.5)}px 'Space Grotesk',sans-serif`; ctx.fillText(Math.round(p*100)+'%',cx,cy);
+  }
+  function pie(t){
+    const cx=w*0.52,cy=h*0.15,r=Math.min(44,w*0.036),segs=[0.4,0.34,0.26],cols=[`rgba(${GOLD},0.3)`,`rgba(${STEEL},0.26)`,`rgba(${GOLDL},0.22)`]; let s=-Math.PI/2+t*0.05;
+    segs.forEach((sg,i)=>{ const e=s+sg*6.2832; ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,s,e); ctx.closePath(); ctx.fillStyle=cols[i]; ctx.fill(); s=e; });
+  }
+  function pctCounter(t){
+    const x=w*0.13,y=h*0.19,val=Math.round(52+14*Math.sin(t*0.2));
+    ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+    ctx.fillStyle=`rgba(${IVORY},0.32)`; ctx.font=`700 ${Math.round(Math.min(60,w*0.047))}px 'Space Grotesk',sans-serif`; ctx.fillText(val+'%',x,y);
+    ctx.fillStyle=`rgba(${GOLD},0.4)`; ctx.font=`600 ${Math.round(Math.min(14,w*0.011))}px Inter,sans-serif`; ctx.fillText('YoY GROWTH',x,y+18);
+  }
+  function hbars(t){
+    const x=w*0.7,y=h*0.44;
+    for(let i=0;i<6;i++){ const len=36+(Math.sin(t*0.4+i*0.6)*0.5+0.5)*118,yy=y+i*13;
+      ctx.strokeStyle=i%2?`rgba(${GOLD},0.2)`:`rgba(${STEEL},0.18)`; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(x,yy); ctx.lineTo(x+len,yy); ctx.stroke(); }
+    ctx.strokeStyle=`rgba(${STEEL},0.12)`; ctx.lineWidth=1; ctx.strokeRect(x-14,y-16,150,6*13+6);
   }
 
-  function drawSeries(s, progress, time){
-    const n = s.pts.length, total = n - 1;
-    const lead = progress * total;            // fractional index reached
-    const drift = i => Math.sin(time * 0.0006 + s.pts[i].phase) * 200; // subtle "live" motion
-    let lx = null, ly = null;
-
-    ctx.beginPath();
-    for (let i = 0; i < n && i <= lead; i++){
-      const x = xOf(i, n), y = yOf(s.pts[i].v + drift(i));
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-      lx = x; ly = y;
-    }
-    const i0 = Math.floor(lead), frac = lead - i0;          // partial leading segment
-    if (i0 < n - 1 && frac > 0){
-      const x0 = xOf(i0, n),   y0 = yOf(s.pts[i0].v   + drift(i0));
-      const x1 = xOf(i0 + 1, n), y1 = yOf(s.pts[i0 + 1].v + drift(i0 + 1));
-      lx = x0 + (x1 - x0) * frac; ly = y0 + (y1 - y0) * frac;
-      ctx.lineTo(lx, ly);
-    }
-    ctx.strokeStyle = s.color; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    ctx.stroke();
-
-    for (let i = 0; i <= i0 && i < n; i++){               // markers at reached points
-      const x = xOf(i, n), y = yOf(s.pts[i].v + drift(i));
-      ctx.beginPath(); ctx.arc(x, y, 2.4, 0, Math.PI * 2);
-      ctx.fillStyle = s.color; ctx.fill();
-    }
-    if (s.glow && lx != null){                            // pulsing leading dot
-      const r = 3 + Math.sin(time * 0.005) * 1.1;
-      ctx.beginPath(); ctx.arc(lx, ly, r + 4, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(216,190,158,0.18)'; ctx.fill();
-      ctx.beginPath(); ctx.arc(lx, ly, r, 0, Math.PI * 2);
-      ctx.fillStyle = s.glow; ctx.fill();
-    }
-  }
-
-  let start = null;
+  let start=null;
   function frame(ts){
-    if (start == null) start = ts;
-    const elapsed = ts - start;
-    let p = reduced ? 1 : Math.min(elapsed / 2600, 1);
-    p = 1 - Math.pow(1 - p, 3);                            // ease-out draw
-    ctx.clearRect(0, 0, w, h);
-    drawGrid();
-    series.forEach(s => drawSeries(s, p, reduced ? 0 : elapsed));
-    if (!reduced) requestAnimationFrame(frame);
+    if(start==null) start=ts; const el=(ts-start)/1000;
+    let prog=reduced?1:Math.min(el/2.6,1); prog=1-Math.pow(1-prog,3);
+    ctx.clearRect(0,0,w,h);
+    grid();
+    stacks(back,el,false);
+    watermark();
+    areaLine(el,prog); barChart(el); hbars(el); pctCounter(el); pie(el); donut(el);
+    stacks(front,el,true);
+    if(!reduced) requestAnimationFrame(frame);
   }
-
-  function startAll(){ resize(); build(); start = null; requestAnimationFrame(frame); }
-  window.addEventListener('resize', () => { resize(); if (reduced) requestAnimationFrame(frame); });
+  function startAll(){ resize(); buildLine(); start=null; requestAnimationFrame(frame); }
+  addEventListener('resize',()=>{ resize(); if(reduced) requestAnimationFrame(frame); });
   startAll();
+})();
+
+/* ===== Intro laptop login scene ===== */
+(function intro(){
+  const intro = document.getElementById('intro');
+  if (!intro) return;
+  const cursor = document.getElementById('introCursor');
+  const stage  = document.getElementById('introStage');
+  const login  = document.getElementById('screenLogin');
+  const skip   = document.getElementById('introSkip');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.body.classList.add('intro-lock');
+  let entered = false, done = false;
+
+  function finish(){
+    if (done) return; done = true;
+    document.body.classList.remove('intro-lock');
+    intro.classList.add('gone');
+    setTimeout(() => intro.remove(), 1000);
+  }
+  function enter(){
+    if (entered) return; entered = true;
+    login.classList.add('press');
+    setTimeout(() => intro.classList.add('tilt'), 140);   // slow tilt to 3/4 angle
+    setTimeout(() => intro.classList.add('zoom'), 980);    // then rush into the screen
+    setTimeout(() => intro.classList.add('gone'), 2150);   // fade through as it fills, revealing the site
+    setTimeout(finish, 3050);
+  }
+  login.addEventListener('click', enter);
+  skip.addEventListener('click', () => { intro.classList.add('gone'); setTimeout(finish, 260); });
+
+  if (reduced){ finish(); return; }
+  if (location.search.includes('hold')) return;   // pause auto-play (manual login)
+
+  setTimeout(() => {
+    const sr = stage.getBoundingClientRect(), br = login.getBoundingClientRect();
+    cursor.style.left = ((br.left + br.width/2 - sr.left) / sr.width) * 100 + '%';
+    cursor.style.top  = ((br.top  + br.height/2 - sr.top) / sr.height) * 100 + '%';
+  }, 850);
+  setTimeout(() => { cursor.classList.add('click'); login.classList.add('press'); }, 2150);
+  setTimeout(() => { cursor.classList.remove('click'); login.classList.remove('press'); enter(); }, 2450);
+})();
+
+/* ===== Services coverflow carousel ===== */
+(function coverflow(){
+  const vp = document.getElementById('cfViewport');
+  if (!vp) return;
+  const cards = [...vp.querySelectorAll('.cf-card')];
+  const dotsWrap = document.getElementById('cfDots');
+  const prev = document.getElementById('cfPrev'), next = document.getElementById('cfNext');
+  const n = cards.length;
+  let active = 0, timer = null;
+
+  cards.forEach((c, i) => {
+    const d = document.createElement('button');
+    d.className = 'cf-dot'; d.setAttribute('aria-label', 'Service ' + (i+1));
+    d.addEventListener('click', () => { go(i); restart(); });
+    dotsWrap.appendChild(d);
+  });
+  const dots = [...dotsWrap.children];
+
+  function layout(){
+    cards.forEach((card, i) => {
+      let off = i - active;
+      if (off >  n/2) off -= n;
+      if (off < -n/2) off += n;
+      const abs = Math.abs(off);
+      const x = off * 152, ry = off * -22, tz = abs === 0 ? 0 : (-165*abs - 30),
+            sc = abs === 0 ? 1 : Math.max(0.72, 0.9 - abs*0.06);
+      card.style.transform = `translateX(${x}px) translateZ(${tz}px) rotateY(${ry}deg) scale(${sc})`;
+      card.style.opacity = abs > 2 ? '0' : '1';
+      card.style.zIndex = String(100 - abs);
+      card.style.pointerEvents = abs > 2 ? 'none' : 'auto';
+      card.classList.toggle('active', off === 0);
+      card.setAttribute('tabindex', off === 0 ? '0' : '-1');
+    });
+    dots.forEach((d, i) => d.classList.toggle('on', i === active));
+  }
+  function go(i){ active = ((i % n) + n) % n; layout(); }
+  function restart(){ clearInterval(timer); timer = setInterval(() => go(active + 1), 5000); }
+
+  prev.addEventListener('click', () => { go(active - 1); restart(); });
+  next.addEventListener('click', () => { go(active + 1); restart(); });
+  cards.forEach((card, i) => card.addEventListener('click', () => {
+    if (i === active) { if (window.__openService) window.__openService(card); }
+    else { go(i); restart(); }
+  }));
+
+  let sx = null;
+  vp.addEventListener('pointerdown', e => { sx = e.clientX; });
+  window.addEventListener('pointerup', e => {
+    if (sx == null) return;
+    const dx = e.clientX - sx;
+    if (Math.abs(dx) > 50){ dx < 0 ? go(active+1) : go(active-1); restart(); }
+    sx = null;
+  });
+  const wrap = vp.parentElement;
+  wrap.addEventListener('mouseenter', () => clearInterval(timer));
+  wrap.addEventListener('mouseleave', restart);
+
+  layout(); restart();
 })();

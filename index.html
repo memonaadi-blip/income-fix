@@ -16,6 +16,30 @@
 </head>
 <body>
   <a href="#services" class="skip-link">Skip to content</a>
+
+  <!-- INTRO: laptop login scene -->
+  <div class="intro" id="intro">
+    <button class="intro-skip" id="introSkip">Skip intro →</button>
+    <div class="intro-stage" id="introStage">
+      <div class="laptop">
+        <div class="laptop-screen">
+          <div class="screen-inner">
+            <img class="screen-logo" src="logo-mark-gold.png" alt="FINANSYS" />
+            <div class="screen-brand">FINAN<span>SYS</span></div>
+            <div class="screen-tag">Advisory · Systems · Compliance</div>
+            <button class="screen-login" id="screenLogin">Log in <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <div class="laptop-hinge"></div>
+        <div class="laptop-base"><div class="laptop-keys"></div></div>
+      </div>
+      <div class="intro-cursor" id="introCursor">
+        <svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 2 L4 20 L9 15 L12.5 22 L15 21 L11.5 14 L18 14 Z" fill="#E8E2D8" stroke="#0E1422" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="intro-hint" id="introHint">Click "Log in" to enter</div>
+    </div>
+  </div>
+
   <!-- Animated background canvas -->
   <canvas id="bg-canvas"></canvas>
   <div class="grid-overlay"></div>
@@ -119,61 +143,67 @@
       <h2>Your complete <span class="grad-text">financial backbone</span></h2>
       <p>Six specialised services, one accountable partner — from advice and compliance to the systems that run it all.</p>
     </div>
-    <div class="cards">
-      <article class="service-card reveal" data-reveal data-tilt>
-        <div class="svc-icon">
-          <svg viewBox="0 0 48 48" width="44" height="44"><path d="M8 36 L18 24 L26 30 L40 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="40" cy="12" r="3.5" fill="currentColor"/></svg>
-        </div>
-        <h3>Investment Advisory</h3>
-        <p>Disciplined, risk-aware strategies to grow and protect your capital — built around your goals and reviewed as markets move.</p>
-        <span class="svc-arrow">→</span>
-      </article>
+    <div class="coverflow reveal" data-reveal id="coverflow">
+      <div class="cf-viewport" id="cfViewport">
+        <article class="service-card cf-card" data-i="0">
+          <span class="cf-num">01</span>
+          <div class="cf-imgwrap"><div class="svc-icon" style="display:none"></div>
+            <svg class="cf-icon" viewBox="0 0 48 48"><path d="M8 36 L18 24 L26 30 L40 12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="40" cy="12" r="3.5" fill="currentColor"/></svg>
+          </div>
+          <div class="cf-body"><h3>Investment Advisory</h3><p class="cf-cat">Grow your capital</p></div>
+          <span class="cf-open" aria-hidden="true">↗</span>
+        </article>
 
-      <article class="service-card reveal" data-reveal data-tilt>
-        <div class="svc-icon">
-          <svg viewBox="0 0 48 48" width="44" height="44"><rect x="10" y="8" width="28" height="32" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M17 18 H31 M17 24 H31 M17 30 H26" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-        </div>
-        <h3>Tax Planning</h3>
-        <p>Proactive, year-round tax strategy that legally minimises liability and keeps you fully compliant — no last-minute scramble.</p>
-        <span class="svc-arrow">→</span>
-      </article>
+        <article class="service-card cf-card" data-i="1">
+          <span class="cf-num">02</span>
+          <div class="cf-imgwrap">
+            <svg class="cf-icon" viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="32" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M17 18 H31 M17 24 H31 M17 30 H26" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          </div>
+          <div class="cf-body"><h3>Tax Planning</h3><p class="cf-cat">Keep more of it</p></div>
+          <span class="cf-open" aria-hidden="true">↗</span>
+        </article>
 
-      <article class="service-card reveal" data-reveal data-tilt>
-        <div class="svc-icon">
-          <svg viewBox="0 0 48 48" width="44" height="44"><path d="M8 40 H40 M12 40 V18 L24 10 L36 18 V40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M18 22 H22 M26 22 H30 M18 28 H22 M26 28 H30 M21 40 V34 H27 V40" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-        </div>
-        <h3>REIT Registrations</h3>
-        <p>End-to-end support to structure, register and launch a Real Estate Investment Trust — from feasibility to regulatory approval.</p>
-        <span class="svc-arrow">→</span>
-      </article>
+        <article class="service-card cf-card" data-i="2">
+          <span class="cf-num">03</span>
+          <div class="cf-imgwrap">
+            <svg class="cf-icon" viewBox="0 0 48 48"><path d="M8 40 H40 M12 40 V18 L24 10 L36 18 V40" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M18 22 H22 M26 22 H30 M18 28 H22 M26 28 H30 M21 40 V34 H27 V40" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="cf-body"><h3>REIT Registrations</h3><p class="cf-cat">Launch your REIT</p></div>
+          <span class="cf-open" aria-hidden="true">↗</span>
+        </article>
 
-      <article class="service-card reveal" data-reveal data-tilt>
-        <div class="svc-icon">
-          <svg viewBox="0 0 48 48" width="44" height="44"><circle cx="24" cy="24" r="8" fill="none" stroke="currentColor" stroke-width="3"/><path d="M24 8 V13 M24 35 V40 M8 24 H13 M35 24 H40 M13.5 13.5 l3.2 3.2 M31.3 31.3 l3.2 3.2 M34.5 13.5 l-3.2 3.2 M16.7 31.3 l-3.2 3.2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-        </div>
-        <h3>ERP Implementation</h3>
-        <p>We plan, configure and roll out financial ERP systems that unify accounting, reporting and operations — team trained and confident.</p>
-        <span class="svc-arrow">→</span>
-      </article>
+        <article class="service-card cf-card" data-i="3">
+          <span class="cf-num">04</span>
+          <div class="cf-imgwrap">
+            <svg class="cf-icon" viewBox="0 0 48 48"><circle cx="24" cy="24" r="8" fill="none" stroke="currentColor" stroke-width="3"/><path d="M24 8 V13 M24 35 V40 M8 24 H13 M35 24 H40 M13.5 13.5 l3.2 3.2 M31.3 31.3 l3.2 3.2 M34.5 13.5 l-3.2 3.2 M16.7 31.3 l-3.2 3.2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          </div>
+          <div class="cf-body"><h3>ERP Implementation</h3><p class="cf-cat">Systemise finance</p></div>
+          <span class="cf-open" aria-hidden="true">↗</span>
+        </article>
 
-      <article class="service-card reveal" data-reveal data-tilt>
-        <div class="svc-icon">
-          <svg viewBox="0 0 48 48" width="44" height="44"><rect x="8" y="16" width="32" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M18 16 V13 a2 2 0 0 1 2-2 h8 a2 2 0 0 1 2 2 V16 M8 26 H40" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <h3>Business Finance</h3>
-        <p>Outsourced finance leadership — forecasting, reporting and funding readiness — so you can make confident decisions and scale.</p>
-        <span class="svc-arrow">→</span>
-      </article>
+        <article class="service-card cf-card" data-i="4">
+          <span class="cf-num">05</span>
+          <div class="cf-imgwrap">
+            <svg class="cf-icon" viewBox="0 0 48 48"><rect x="8" y="16" width="32" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M18 16 V13 a2 2 0 0 1 2-2 h8 a2 2 0 0 1 2 2 V16 M8 26 H40" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="cf-body"><h3>Business Finance</h3><p class="cf-cat">Scale with clarity</p></div>
+          <span class="cf-open" aria-hidden="true">↗</span>
+        </article>
 
-      <article class="service-card reveal" data-reveal data-tilt>
-        <div class="svc-icon">
-          <svg viewBox="0 0 48 48" width="44" height="44"><path d="M24 13 C18 9 12 9 8 11 V37 C12 35 18 35 24 39 C30 35 36 35 40 37 V11 C36 9 30 9 24 13 Z M24 13 V39" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
-        </div>
-        <h3>Bookkeeping &amp; Financial Services</h3>
-        <p>Accurate, up-to-date books and the day-to-day financial operations that keep your business compliant and audit-ready.</p>
-        <span class="svc-arrow">→</span>
-      </article>
+        <article class="service-card cf-card" data-i="5">
+          <span class="cf-num">06</span>
+          <div class="cf-imgwrap">
+            <svg class="cf-icon" viewBox="0 0 48 48"><path d="M24 13 C18 9 12 9 8 11 V37 C12 35 18 35 24 39 C30 35 36 35 40 37 V11 C36 9 30 9 24 13 Z M24 13 V39" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="cf-body"><h3>Bookkeeping &amp; Financial Services</h3><p class="cf-cat">Books, handled</p></div>
+          <span class="cf-open" aria-hidden="true">↗</span>
+        </article>
+      </div>
+      <button class="cf-nav cf-prev" id="cfPrev" aria-label="Previous service">‹</button>
+      <button class="cf-nav cf-next" id="cfNext" aria-label="Next service">›</button>
+      <div class="cf-dots" id="cfDots"></div>
     </div>
+    <p style="text-align:center;color:var(--muted);margin-top:38px;font-size:.9rem">Use the arrows or dots to browse · click the focused card for details</p>
   </section>
 
   <!-- PROCESS -->
